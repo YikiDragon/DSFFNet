@@ -65,33 +65,6 @@ class LossEdge(torch.nn.Module):
         loss = torch.mean(torch.abs(edge_len_pred / edge_len_gt - 1))
         return loss
 
-
-
-# import metrics.chamfer3D.dist_chamfer_3D as dist_chamfer_3D
-# class LossChamferDistance(torch.nn.Module):
-#     """
-#     chamfer损失函数,最近邻点对的距离之和\n
-#     注意：需要提供batch,因为不同批次之间不可求chamfer\n
-#     Args:
-#         pred_v: Tensor[BV,3]    预测点集
-#         gt_v: Tensor[BV,3]      正确点集
-#         batch: Tensor[BV]       批索引
-#     Returns:
-#         loss: chamfer损失
-#     """
-#     def __init__(self):
-#         super(LossChamferDistance, self).__init__()
-#         self.chamfer_dist = dist_chamfer_3D.chamfer_3DDist()
-#     def forward(self, pred_v, gt_v, batch):
-#         loss = torch.Tensor(0)
-#         for i in range(batch.max()+1):
-#             cur_batch = torch.argwhere(batch == i).squeeze(1)
-#             pred_v_batch = pred_v[cur_batch].unsqueeze(0).cuda()      # V,3
-#             gt_v_batch = gt_v[cur_batch].unsqueeze(0).cuda()          # V,3
-#             dist1, dist2, idx1, idx2 = self.chamfer_dist(gt_v_batch, pred_v_batch)
-#             loss += torch.mean(dist1) + torch.mean(dist2)
-#         return loss
-
 if __name__=='__main__':
     import torch.profiler as profiler
     loss_reconstruction = LossRecL1()
